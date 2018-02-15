@@ -16,28 +16,29 @@ const Input = styled.input`
 class MoodInput extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { value: 'Party' };
+      this.state = { value: '' };
 
       // React ES6 does not bind 'this' to event handlers by default
-      this.handleSubmit = this.handleSubmit.bind(this);
-      this.handleInputChange = this.handleInputChange.bind(this);
+      this.inputChangeHandler = this.inputChangeHandler.bind(this);
+      this.submitHandler = this.submitHandler.bind(this);
     }
 
-    handleInputChange(event) {
+    inputChangeHandler(event) {
       this.setState({value: event.target.value});
     }
 
-    handleSubmit(event) {
-      alert('A name was submitted: ' + this.state.value);
+    submitHandler(event) {
+      this.props.onInputChange(this.state.value);
       event.preventDefault();
     }
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.submitHandler}>
                 <Input
-                value={this.state.value}
-                onChange={this.handleInputChange} />
+                    value={this.state.value}
+                    onChange={this.inputChangeHandler}
+                />
             </form>
         )
     }

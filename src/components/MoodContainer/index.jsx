@@ -1,5 +1,6 @@
 // Externals
-import React from "react";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from "styled-components";
 import ReactSVG from 'react-svg';
 
@@ -35,34 +36,46 @@ const StyledContainer = styled.div`
 `;
 
 // React components
-// Grr flex shit not working
-const MoodContainer = (props) => {
-    console.log('backgroundImage', backgroundImage);
-    return (
-        <StyledContainer backgroundImage={backgroundImage}>
-            <FlexItem  basis="50%">
-                <Flex column full alignCenter justifyEnd>
-                    <MoodInput />
-                </Flex>
-             </FlexItem>
-             <FlexItem grow="1">
-                 <Flex column full alignCenter justifyStart>
-                     <p> Listening...</p>
-                 </Flex>
-              </FlexItem>
-              <FlexItem basis="30%">
-                  <Flex column full alignCenter justifyCenter>
-                      <img src={test} className="btn-placebolder" alt="logo" />
-                      <ReactSVG
-                          path="../../static/atomic.svg"
-                          callback={svg => console.log('THe svg:', svg)}
-                          className="button-placeholder"
-                          wrapperClassName="wrapper-class-name"
-                     />
-                  </Flex>
-               </FlexItem>
-        </StyledContainer>
-    )
+class MoodContainer extends Component {
+
+    static PropType = {
+
+    }
+
+    constructor(props) {
+        console.log('backgroundImage', backgroundImage);
+        super(props);
+    }
+    render() {
+        return (
+            <StyledContainer backgroundImage={backgroundImage}>
+                <FlexItem  basis="50%">
+                    <Flex column full alignCenter justifyEnd>
+                        <MoodInput
+                            onInputChange={this.props.moodChangeHandler}
+                            />
+
+                    </Flex>
+                </FlexItem>
+                <FlexItem grow="1">
+                    <Flex column full alignCenter justifyStart>
+                        <p> Listening...</p>
+                    </Flex>
+                </FlexItem>
+                <FlexItem basis="30%">
+                    <Flex column full alignCenter justifyCenter>
+                        <img src={test} className="btn-placebolder" alt="logo" />
+                        <ReactSVG
+                            path="../../static/atomic.svg"
+                            callback={svg => console.log('THe svg:', svg)}
+                            className="button-placeholder"
+                            wrapperClassName="wrapper-class-name"
+                            />
+                    </Flex>
+                </FlexItem>
+            </StyledContainer>
+        )
+    }
 }
 
 
