@@ -1,9 +1,16 @@
 // Externals
 import React from "react";
 import styled from "styled-components";
+import ReactSVG from 'react-svg';
 
 // Components
+import Flex, { FlexItem } from 'styled-flex-component';
 import MoodInput from "../MoodInput";
+
+// SVGs
+// import ButtonPlaceholderSVG from 'react-svg-loader!../../static/button-placeholder.svg';
+// import AtomicSVG from 'react-svg-loader!../../static/atomic.svg';
+import test from '../../static/button-placeholder.svg';
 
 // Styles
 const backgroundImage =   'radial-gradient(50vw circle at 50vw 0, hsl(3, 57%, 80%), transparent 99%), ' +
@@ -17,20 +24,43 @@ const backgroundImage =   'radial-gradient(50vw circle at 50vw 0, hsl(3, 57%, 80
 const StyledContainer = styled.div`
     background-image: ${props => props.backgroundImage};
     background-color: hsl(3, 57%, 80%);
+    color: white;
     width: 100vw;
     height: 100vh;
     padding: 0px;
     margin: 0px;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
 `;
 
 // React components
+// Grr flex shit not working
 const MoodContainer = (props) => {
     console.log('backgroundImage', backgroundImage);
     return (
         <StyledContainer backgroundImage={backgroundImage}>
-            <MoodInput />
-            {/* <UserPrompt />
-            // <Navigation />*/}
+            <FlexItem  basis="50%">
+                <Flex column full alignCenter justifyEnd>
+                    <MoodInput />
+                </Flex>
+             </FlexItem>
+             <FlexItem grow="1">
+                 <Flex column full alignCenter justifyStart>
+                     <p> Listening...</p>
+                 </Flex>
+              </FlexItem>
+              <FlexItem basis="30%">
+                  <Flex column full alignCenter justifyCenter>
+                      <img src={test} className="btn-placebolder" alt="logo" />
+                      <ReactSVG
+                          path="../../static/atomic.svg"
+                          callback={svg => console.log('THe svg:', svg)}
+                          className="button-placeholder"
+                          wrapperClassName="wrapper-class-name"
+                     />
+                  </Flex>
+               </FlexItem>
         </StyledContainer>
     )
 }

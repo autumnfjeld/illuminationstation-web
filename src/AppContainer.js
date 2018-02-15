@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // Components
-import MoodContainer from "./components/MoodContainer";
+import MoodContainer from "./components/MoodContainer/index.jsx";
 
 // React Component Definition
 class App extends Component {
