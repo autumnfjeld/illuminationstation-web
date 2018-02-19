@@ -45,13 +45,19 @@ class MoodContainer extends Component {
     constructor(props) {
         console.log('backgroundImage', backgroundImage);
         super(props);
+        this.state = {
+            uiPrompt: 'Type your mood ...'
+        }
     }
+    // TODO make ui prompts rotating thru mood prompts
     render() {
         return (
             <StyledContainer backgroundImage={backgroundImage}>
                 <FlexItem  basis="50%">
                     <Flex column full alignCenter justifyEnd>
+                        <p>Mood: {this.props.mood} </p>
                         <MoodInput
+                            interfaceType={this.props.interfaceType}
                             onInputChange={this.props.moodChangeHandler}
                             />
 
@@ -59,7 +65,7 @@ class MoodContainer extends Component {
                 </FlexItem>
                 <FlexItem grow="1">
                     <Flex column full alignCenter justifyStart>
-                        <p> Listening...</p>
+                        <p> {this.state.uiPrompt}</p>
                     </Flex>
                 </FlexItem>
                 <FlexItem basis="30%">
