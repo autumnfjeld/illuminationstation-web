@@ -7,32 +7,28 @@ import axios from 'axios';
 import MoodContainer from "./components/MoodContainer/index.jsx";
 
 // App constants
-const controllerUrl = "http://59.100.235.250:9800";
+import {controllerUrl, moods, inputStates, appStates} from './static/constants.js';
+
 
 // React Component Definition
 class App extends Component {
-    static propType = {
-        interfaceType: PropTypes.string.isRequired,
-        mood: PropTypes.string.isRequired,
-    }
-
     constructor(props) {
       console.log('IlluminationStation App got props', props);
       super(props);
       this.state = {
-          // appState: waiting, working, responding
-          appStatus: '',
-          // voice, text, button
-          interfaceType: 'text',
-          // mood: none, party, soothing
-          mood: 'party',
           // Text could be prompt or response -> appState is either waitingForUser, working, or responding
           text: {
               voice: 'Listening',
               text: 'Type something'
-          }
+          },
+          // Given appStates at loadtime
+          currentInput: 'text',
+          currentStatus: 'working',
+          currentMood: 'neutral'
       }
+
       this.fetchMood = this.fetchMood.bind(this);
+      this.handleInputStateChange = this.handleInputStateChange.bind(this);
   }
 
   componentDidMount() {
@@ -44,15 +40,15 @@ class App extends Component {
       axios.get(controllerUrl + '/getstate')
       .then( (res) => {
           console.log('res.data', res.data);
-          this.setState({mood: res.data.mood})
+          this.setState({currentMood: res.data.mood})
       })
       .catch( (err) => {
           console.log('error', err);
       });
   }
 
+  // TODO change to verb
   moodChangeHandler(value) {
-      // Make POST to change lightbulb
       console.log('moodChangeHandler', value);
       const reqBody = {mood: value};
       axios.post(controllerUrl, reqBody)
@@ -64,14 +60,27 @@ class App extends Component {
           });
   }
 
+  handleInputStateChange(value) {
+      console.log('handleInputStateChange', value);
+      this.setState({currentInput: value});
+  }
+
   render() {
     return <MoodContainer
-            moodChangeHandler={this.moodChangeHandler}
-            mood={this.state.mood}
-            text={this.state.text}
-            userInterfaceType={this.state.interfaceType}
+                moodChangeHandler={this.moodChangeHandler}
+                handleInputStateChange={this.handleInputStateChange}
+                hand
+                mood={this.state.currentMood}
+                text={this.state.text}
+                inputState={this.state.currentInput}
             />
   }
 }
+
+App.propTypes = {
+    currentInput: PropTypes.oneOf(Object.keys(inputStates)).isRequired,
+    currentMood: PropTypes.oneOf(Object.keys(moods)).isRequired,
+    currentStatus: PropTypes.oneOf(Object.keys(appStates)).isRequired
+};
 
 export default App;

@@ -2,16 +2,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from "styled-components";
-import ReactSVG from 'react-svg';
 
 // Components
 import Flex, { FlexItem } from 'styled-flex-component';
 import MoodInput from "../MoodInput";
-
-// SVGs
-// import ButtonPlaceholderSVG from 'react-svg-loader!../../static/button-placeholder.svg';
-// import AtomicSVG from 'react-svg-loader!../../static/atomic.svg';
-import test from '../../static/button-placeholder.svg';
+import NavButtons from "../NavButtons";
 
 // Styles
 const backgroundImage =   'radial-gradient(50vw circle at 50vw 0, hsl(3, 57%, 80%), transparent 99%), ' +
@@ -43,7 +38,7 @@ class MoodContainer extends Component {
     }
 
     constructor(props) {
-        console.log('backgroundImage', backgroundImage);
+        // console.log('backgroundImage', backgroundImage);
         super(props);
         this.state = {
             uiPrompt: 'Type your mood ...'
@@ -56,11 +51,11 @@ class MoodContainer extends Component {
                 <FlexItem  basis="50%">
                     <Flex column full alignCenter justifyEnd>
                         <p>Mood: {this.props.mood} </p>
+                        <p>InputStae: {this.props.inputState} </p>
                         <MoodInput
                             interfaceType={this.props.interfaceType}
                             onInputChange={this.props.moodChangeHandler}
                             />
-
                     </Flex>
                 </FlexItem>
                 <FlexItem grow="1">
@@ -70,13 +65,9 @@ class MoodContainer extends Component {
                 </FlexItem>
                 <FlexItem basis="30%">
                     <Flex column full alignCenter justifyCenter>
-                        <img src={test} className="btn-placebolder" alt="logo" />
-                        <ReactSVG
-                            path="../../static/atomic.svg"
-                            callback={svg => console.log('THe svg:', svg)}
-                            className="button-placeholder"
-                            wrapperClassName="wrapper-class-name"
-                            />
+                        <NavButtons
+                            handleInputStateChange={this.props.handleInputStateChange}
+                            currentInput={this.props.currentInput} />
                     </Flex>
                 </FlexItem>
             </StyledContainer>
@@ -84,5 +75,9 @@ class MoodContainer extends Component {
     }
 }
 
+MoodContainer.propTypes = {
+  mood: PropTypes.string,
+  interfaceType: PropTypes.string
+};
 
 export default MoodContainer
