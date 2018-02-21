@@ -10,7 +10,7 @@ import NavButton from '../NavButton';
 import {inputStates} from '../../static/constants.js';
 
 const NavButtons = (props) => {
-    console.log('NavButtons inputStates', Object.keys(inputStates));
+    // console.log('NavButtons inputStates', Object.keys(inputStates), props.currentInput);
     const buttons = Object.keys(inputStates).map( (type, i) =>
         <NavButton
             key={i}

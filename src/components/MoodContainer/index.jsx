@@ -51,9 +51,9 @@ class MoodContainer extends Component {
                 <FlexItem  basis="50%">
                     <Flex column full alignCenter justifyEnd>
                         <p>Mood: {this.props.mood} </p>
-                        <p>InputStae: {this.props.inputState} </p>
+                        <p>Input State: {this.props.currentInput} </p>
                         <MoodInput
-                            interfaceType={this.props.interfaceType}
+                            currentInput={this.props.currentInput}
                             onInputChange={this.props.moodChangeHandler}
                             />
                     </Flex>

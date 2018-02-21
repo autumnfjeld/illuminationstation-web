@@ -1,43 +1,35 @@
-// Externals
-import React from "react";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-// import Img from 'react-image'
+//Externals
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Flex from 'styled-flex-component';
 
 // components
 import Icon from '../Icon';
-// SVGs
-// import speechBtnSvg from '../../static/speech.svg';
-// import textBtnSvg from '../../static/text.svg';
 
 // Styles
-const StyledButton = styled.div`
-      align-items: center;
-      cursor: pointer;
-      display: flex;
-      height: 70px;
-      justify-content: space-between;
-      width: 60px;
-      max-width: 100px;
-      padding: 0 20px 0 30px;
+const StyledFlexButton = styled(Flex)`
+    cursor: pointer;
+    width: ${props => props.isActive ? '60px' : '40px'};
+    ${'' /* height: ${props => props.isActive ? '60px' : '40px'}; */}
+    margin: 0 10px;
+    ${'' /* transform: scale(1.3); */}
+    transition: width .25s ease-in-out;
+    will-change: width;
 `;
 
 const NavButton = (props) => {
-    console.log('NavButton props', props);
+    // console.log('NavButton props', props);
+    let color = props.isActive ? '#fff' : '#dbdbdb';
 
     const onClick = () => {
-        // isActive should be changed as a result of currentInput changing
-        console.log('props.isActive', props.isActive);
-        console.log('props.type', props.type);
-        // props.isActive = !props.isActive;
         props.handleInputStateChange(props.type);
     }
 
     return (
-        <StyledButton onClick={onClick}>
-        <p> {props.isActive} </p>
-            <Icon filename={props.type} isActive={props.isActive} stroke="#333" width={500} />
-        </StyledButton>
+        <StyledFlexButton contentCenter isActive={props.isActive} onClick={onClick}>
+            <Icon filename={props.type} color={color}/>
+        </StyledFlexButton>
     );
 }
 
@@ -50,6 +42,7 @@ NavButton.propTypes = {
 NavButton.defaultProps = {
   isActive: false,
   onClick: () => {},
+  color: '#dbdbdb',
 };
 
 export default NavButton;

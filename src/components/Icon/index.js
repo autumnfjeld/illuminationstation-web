@@ -5,29 +5,25 @@ import PropTypes from 'prop-types';
 
 const StyledSVG = styled(SVG)`
     svg {
-        width: ${props => props.isActive ? 100 : 50};
-        height: ${props => props.height};
+        height: 100%;
+        width: 100%;
     }
     g {
-        stroke: ${props => props.stroke};
+        stroke: ${props => props.color};
     }
 `;
 
 const Icon = props => (
-    <StyledSVG src={require(`../../static/${props.filename}.svg`)} />
+    <StyledSVG color={props.color} src={require(`../../static/${props.filename}.svg`)} />
 );
 
 Icon.propTypes = {
-    height: PropTypes.number,
     filename: PropTypes.string.isRequired,
-    stroke: PropTypes.string,
-    width: PropTypes.number,
+    color: PropTypes.string.isRequired,
 };
 
 Icon.defaultProps = {
-    height: 200,
-    stroke: '#FFF',
-    width: 100,
+    color: '#dbdbdb',
 };
 
 export default Icon;

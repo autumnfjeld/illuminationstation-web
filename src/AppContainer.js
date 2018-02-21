@@ -39,7 +39,7 @@ class App extends Component {
   fetchMood() {
       axios.get(controllerUrl + '/getstate')
       .then( (res) => {
-          console.log('res.data', res.data);
+          console.log('Got mood.  res.data', res.data);
           this.setState({currentMood: res.data.mood})
       })
       .catch( (err) => {
@@ -53,7 +53,7 @@ class App extends Component {
       const reqBody = {mood: value};
       axios.post(controllerUrl, reqBody)
           .then( (res) => {
-              console.log('res data', res.data);
+              console.log('Mood changed. res.data=', res.data);
           })
           .catch( (err) => {
               console.log('error', err);
@@ -72,7 +72,7 @@ class App extends Component {
                 hand
                 mood={this.state.currentMood}
                 text={this.state.text}
-                inputState={this.state.currentInput}
+                currentInput={this.state.currentInput}
             />
   }
 }
@@ -81,6 +81,12 @@ App.propTypes = {
     currentInput: PropTypes.oneOf(Object.keys(inputStates)).isRequired,
     currentMood: PropTypes.oneOf(Object.keys(moods)).isRequired,
     currentStatus: PropTypes.oneOf(Object.keys(appStates)).isRequired
+};
+
+App.defaultProps = {
+    currentInput: 'text',
+    currentStatus: 'working',
+    currentMood: 'neutral'
 };
 
 export default App;
