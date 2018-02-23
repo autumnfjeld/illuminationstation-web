@@ -23,7 +23,7 @@ class App extends Component {
           },
           // Given appStates at loadtime
           currentInput: 'text',
-          currentStatus: 'working',
+          currentStatus: 'waiting',
           currentMood: 'neutral'
       }
 
@@ -73,6 +73,7 @@ class App extends Component {
                 mood={this.state.currentMood}
                 text={this.state.text}
                 currentInput={this.state.currentInput}
+                currentStatus={this.state.currentStatus}
             />
   }
 }

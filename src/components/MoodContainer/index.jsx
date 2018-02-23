@@ -7,6 +7,7 @@ import styled from "styled-components";
 import Flex, { FlexItem } from 'styled-flex-component';
 import MoodInput from "../MoodInput";
 import NavButtons from "../NavButtons";
+import PromptText from "../PromptText";
 
 // Styles
 const backgroundImage =   'radial-gradient(50vw circle at 50vw 0, hsl(3, 57%, 80%), transparent 99%), ' +
@@ -50,8 +51,6 @@ class MoodContainer extends Component {
             <StyledContainer backgroundImage={backgroundImage}>
                 <FlexItem  basis="50%">
                     <Flex column full alignCenter justifyEnd>
-                        <p>Mood: {this.props.mood} </p>
-                        <p>Input State: {this.props.currentInput} </p>
                         <MoodInput
                             currentInput={this.props.currentInput}
                             onInputChange={this.props.moodChangeHandler}
@@ -60,24 +59,33 @@ class MoodContainer extends Component {
                 </FlexItem>
                 <FlexItem grow="1">
                     <Flex column full alignCenter justifyStart>
-                        <p> {this.state.uiPrompt}</p>
+                        <PromptText
+                            // mood={this.props.mood}
+                            currentInput={this.props.currentInput}
+                            appStatus={this.props.currentStatus}
+                        />
                     </Flex>
                 </FlexItem>
                 <FlexItem basis="30%">
                     <Flex column full alignCenter justifyCenter>
                         <NavButtons
                             handleInputStateChange={this.props.handleInputStateChange}
-                            currentInput={this.props.currentInput} />
+                            inputState={this.props.currentInput}
+                         />
                     </Flex>
                 </FlexItem>
+                <small>Mood: {this.props.mood} </small>
+                <small>Input State: {this.props.currentInput} </small>
             </StyledContainer>
         )
     }
 }
 
 MoodContainer.propTypes = {
-  mood: PropTypes.string,
-  interfaceType: PropTypes.string
+  mood: PropTypes.string.isRequired,
+  currentInput: PropTypes.string.isRequired,
+  moodChangeHandler: PropTypes.func.isRequired,
+  handleInputStateChange: PropTypes.func.isRequired,
 };
 
 export default MoodContainer

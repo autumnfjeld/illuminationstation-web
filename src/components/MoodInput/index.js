@@ -4,23 +4,35 @@ import React from "react";
 import styled from "styled-components";
 
 // Styles
-const Input = styled.input`
-  padding: 0.5em;
-  margin: 0.5em;
-  color: palevioletred;
-  background: papayawhip;
+const StyledInput = styled.input`
+  color: white;
+  font-size: 16px;
+  background: transparent;
   border: none;
-  border-radius: 3px;
+  border-bottom: 3px solid white;
+  line-height: 1.2;
+  margin: 0.5em;
+  outline:none;
+  padding: 0.1em;
+  transition: width 2s ease-in-out;
+  width: ${props =>  props.width};
+  will-change: width;
 `;
 
 class MoodInput extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { value: '' };
+      this.state = { value: '' , inputWidth: '4px', go: false };
 
       // React ES6 does not bind 'this' to event handlers by default
       this.inputChangeHandler = this.inputChangeHandler.bind(this);
       this.submitHandler = this.submitHandler.bind(this);
+    }
+
+    componentDidMount() {
+        // debugger;
+        console.log('YO');
+        setTimeout(() => this.setState({inputWidth: '200px', go: true}), 0);
     }
 
     inputChangeHandler(event) {
@@ -29,20 +41,23 @@ class MoodInput extends React.Component {
 
     submitHandler(event) {
       this.props.onInputChange(this.state.value);
+      this.setState({value: ''});
       event.preventDefault();
     }
 
     render() {
         return (
             <form onSubmit={this.submitHandler}>
-                <Input
+                <StyledInput
+                    width={this.state.inputWidth}
+                    go={this.state.go}
                     value={this.state.value}
                     onChange={this.inputChangeHandler}
+                    autoFocus
                 />
             </form>
         )
     }
 }
-
 
 export default MoodInput

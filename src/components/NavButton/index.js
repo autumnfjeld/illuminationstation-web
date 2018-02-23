@@ -11,9 +11,7 @@ import Icon from '../Icon';
 const StyledFlexButton = styled(Flex)`
     cursor: pointer;
     width: ${props => props.isActive ? '60px' : '40px'};
-    ${'' /* height: ${props => props.isActive ? '60px' : '40px'}; */}
     margin: 0 10px;
-    ${'' /* transform: scale(1.3); */}
     transition: width .25s ease-in-out;
     will-change: width;
 `;
