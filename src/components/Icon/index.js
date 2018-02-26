@@ -14,7 +14,10 @@ const StyledSVG = styled(SVG)`
 `;
 
 const Icon = props => (
-    <StyledSVG color={props.color} src={require(`../../static/${props.filename}.svg`)} />
+    <StyledSVG
+        color={props.color}
+        src={require(`../../static/${props.filename}.svg`)}
+    />
 );
 
 Icon.propTypes = {

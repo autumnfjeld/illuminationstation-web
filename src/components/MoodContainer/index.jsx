@@ -76,6 +76,7 @@ class MoodContainer extends Component {
                 </FlexItem>
                 <small>Mood: {this.props.mood} </small>
                 <small>Input State: {this.props.currentInput} </small>
+                <small>appStatus: {this.props.currentStatus} </small>
             </StyledContainer>
         )
     }

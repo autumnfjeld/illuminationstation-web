@@ -23,7 +23,7 @@ class App extends Component {
           },
           // Given appStates at loadtime
           currentInput: 'text',
-          currentStatus: 'waiting',
+          currentStatus: 'working',
           currentMood: 'neutral'
       }
 
@@ -40,7 +40,7 @@ class App extends Component {
       axios.get(controllerUrl + '/getstate')
       .then( (res) => {
           console.log('Got mood.  res.data', res.data);
-          this.setState({currentMood: res.data.mood})
+          this.setState({currentMood: res.data.mood, currentStatus: 'waiting'});
       })
       .catch( (err) => {
           console.log('error', err);
@@ -49,11 +49,13 @@ class App extends Component {
 
   // TODO change to verb
   moodChangeHandler(value) {
+      this.setState({currentStatus: 'working'});
       console.log('moodChangeHandler', value);
       const reqBody = {mood: value};
       axios.post(controllerUrl, reqBody)
           .then( (res) => {
               console.log('Mood changed. res.data=', res.data);
+              this.setState({currentStatus:'waiting'})
           })
           .catch( (err) => {
               console.log('error', err);

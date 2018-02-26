@@ -6,7 +6,8 @@ export const controllerUrl = "http://59.100.235.250:9800";
 export const moods = {
     neutral: 'neutral',
     party: 'party',
-    soothing: 'soothing'
+    soothing: 'soothing',
+    artic: 'artic'
 };
 export const inputStates = {
     text: 'text',
