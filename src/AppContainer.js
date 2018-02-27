@@ -9,11 +9,13 @@ import MoodContainer from "./components/MoodContainer/index.jsx";
 // App constants
 import {controllerUrl, moods, inputStates, appStates} from './static/constants.js';
 
+// Styles
+import './styles';
 
 // React Component Definition
 class App extends Component {
     constructor(props) {
-      console.log('IlluminationStation App got props', props);
+      // console.log('IlluminationStation App got props', props);
       super(props);
       this.state = {
           // Text could be prompt or response -> appState is either waitingForUser, working, or responding
@@ -32,7 +34,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-      console.log('App ComponentDidMount');
+      // console.log('App ComponentDidMount');
       this.fetchMood();
   }
 
@@ -63,7 +65,7 @@ class App extends Component {
   }
 
   handleInputStateChange(value) {
-      console.log('handleInputStateChange', value);
+      // console.log('handleInputStateChange', value);
       this.setState({currentInput: value});
   }
 

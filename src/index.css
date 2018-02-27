@@ -1,5 +1,20 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+@font-face {
+    font-family: 'Sporting Grotesque_Bold';
+    src:    url('./static/fonts/Sporting_Grotesque-Bold.eot');
+    src:    url('./static/fonts/Sporting_Grotesque-Bold.eot?#iefix') format('embedded-opentype'),
+            url('./static/fonts/Sporting_Grotesque-Bold.woff') format('woff'),
+            url('./static/fonts/Sporting_Grotesque-Bold.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
+
+@font-face {
+    font-family: 'Sporting Grotesque_Regular';
+    src:    url('./static/fonts/Sporting_Grotesque-Regular.eot');
+    src:    url('./static/fonts/Sporting_Grotesque-Regular.eot?#iefix') format('embedded-opentype'),
+            url('./static/fonts/Sporting_Grotesque-Regular.woff') format('woff'),
+            url('./static/fonts/Sporting_Grotesque-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+/* See styles/index.js  */

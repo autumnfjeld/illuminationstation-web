@@ -6,7 +6,6 @@ import styled from "styled-components";
 // Styles
 const StyledInput = styled.input`
   color: white;
-  font-size: 16px;
   background: transparent;
   border: none;
   border-bottom: 3px solid white;
@@ -24,15 +23,12 @@ class MoodInput extends React.Component {
       super(props);
       this.state = { value: '' , inputWidth: '4px', go: false };
 
-      // React ES6 does not bind 'this' to event handlers by default
       this.inputChangeHandler = this.inputChangeHandler.bind(this);
       this.submitHandler = this.submitHandler.bind(this);
     }
 
     componentDidMount() {
-        // debugger;
-        console.log('YO');
-        setTimeout(() => this.setState({inputWidth: '200px', go: true}), 0);
+        setTimeout(() => this.setState({inputWidth: '300px', go: true}), 0);
     }
 
     inputChangeHandler(event) {

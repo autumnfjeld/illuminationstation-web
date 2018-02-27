@@ -70,7 +70,7 @@ class MoodContainer extends Component {
                     <Flex column full alignCenter justifyCenter>
                         <NavButtons
                             handleInputStateChange={this.props.handleInputStateChange}
-                            inputState={this.props.currentInput}
+                            currentInput={this.props.currentInput}
                          />
                     </Flex>
                 </FlexItem>

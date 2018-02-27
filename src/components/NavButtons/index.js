@@ -11,11 +11,11 @@ import {inputStates} from '../../static/constants.js';
 
 const NavButtons = (props) => {
     // console.log('NavButtons inputStates', Object.keys(inputStates), props.currentInput);
-    const buttons = Object.keys(inputStates).map( (type, i) =>
+    const buttons = Object.keys(inputStates).map( (inputType, i) =>
         <NavButton
             key={i}
-            type={type}
-            isActive={type === props.currentInput}
+            inputType={inputType}
+            isActive={inputType === props.currentInput}
             handleInputStateChange={props.handleInputStateChange}
         />
     );

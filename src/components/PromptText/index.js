@@ -10,11 +10,11 @@ import {moods} from '../../static/constants.js';
 // Styled Component
 const StyledText = styled.p`
   color: white;
-  font-size: 14px;
+  font-size: 1.6rem;
   background: transparent;
   border: none;
   line-height: 1.2;
-  margin: 0.5em;
+  margin-top: 50px;
   outline:none;
   padding: 0.1em;
   transition: width 2s ease-in-out;
@@ -26,12 +26,13 @@ const promptTexts = {
     waiting: {
         text: 'Type your mood',
         speech: 'Tell me how you are feeling',
-        moodPrompts: {
-            'party':    'Let\'s party!',
-            'soothing': 'I\'ve had a rough day.',
-            'artic':    'It\'s sooo hot outside.',
-            'neutral': 'I\'m feelin\' fine.'
-        }
+        moodPrompts: moods,
+        // moodPrompts: {
+        //     'party':    'Let\'s party!',
+        //     'soothing': 'I\'ve had a rough day.',
+        //     'artic':    'It\'s sooo hot outside.',
+        //     'neutral': 'I\'m feelin\' fine.'
+        // }
     },
     working: 'Cool. IlluminationStation at your service.',
     responding: `Found some <insert mood> lights for you.`
@@ -53,13 +54,11 @@ class PromptText extends Component {
         }
         if (props.currentInput === 'voice') this.setState({promptLead: 'Try saying: '});
         this.intervalCallback = this.intervalCallback.bind(this);
-        const moodArray = Object.value
     }
 
     componentWillReceiveProps(nextProps) {
-        // debugger;
         if (this.props.appStatus !== nextProps.appStatus){
-            console.log('props.appStatus', this.props.appStatus, 'nextProps', nextProps.appStatus);
+            // console.log('props.appStatus', this.props.appStatus, 'nextProps', nextProps.appStatus);
             if (nextProps.appStatus === 'waiting') {
                 this.setState({text: promptTexts[nextProps.appStatus][nextProps.currentInput]});
             } else {
@@ -67,10 +66,10 @@ class PromptText extends Component {
             }
         }
     }
-    // const intervalId = set
+
     intervalCallback() {
-        console.log('intervalCallback', this.state.count, Object.keys(moods).length, this.state.text);
-        console.log('Object.values(promptTexts.waiting.moodPrompts) ', Object.values(promptTexts.waiting.moodPrompts))
+        // console.log('intervalCallback', this.state.count, Object.keys(moods).length, this.state.text);
+        // console.log('Object.values(promptTexts.waiting.moodPrompts) ', Object.values(promptTexts.waiting.moodPrompts))
         let promptText = this.state.promptLead + Object.values(promptTexts.waiting.moodPrompts)[this.state.count];
         this.setState({text: promptText});
         // console.log('text',moods[this.state.count], promptTexts.waiting.moodPrompts[moods[this.state.count]]);
@@ -97,17 +96,12 @@ class PromptText extends Component {
                     callback={this.intervalCallback}
                 />
                 <StyledText> {this.state.text} </StyledText>
-                {this.state.count}
             </div>
-
-
         )
-
     }
 };
 
 PromptText.propTypes = {
-    // mood: PropTypes.string.isRequired,
     currentInput: PropTypes.string.isRequired,
     appStatus: PropTypes.string.isRequired
 };

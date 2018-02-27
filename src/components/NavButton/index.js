@@ -21,19 +21,19 @@ const NavButton = (props) => {
     let color = props.isActive ? '#fff' : '#dbdbdb';
 
     const onClick = () => {
-        props.handleInputStateChange(props.type);
+        props.handleInputStateChange(props.inputType);
     }
 
     return (
         <StyledFlexButton contentCenter isActive={props.isActive} onClick={onClick}>
-            <Icon filename={props.type} color={color}/>
+            <Icon filename={props.inputType} color={color}/>
         </StyledFlexButton>
     );
 }
 
 NavButton.propTypes = {
   isActive: PropTypes.bool,
-  type: PropTypes.string,
+  inputType: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };
 
