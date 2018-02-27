@@ -1,26 +1,28 @@
 // Externals
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from "styled-components";
+import styled from 'styled-components';
 
 // Components
 import Flex, { FlexItem } from 'styled-flex-component';
-import MoodInput from "../MoodInput";
-import NavButtons from "../NavButtons";
-import PromptText from "../PromptText";
+import MoodInput from '../MoodInput';
+import NavButtons from '../NavButtons';
+import PromptText from '../PromptText';
 
 // Styles
-const backgroundImage =   'radial-gradient(50vw circle at 50vw 0, hsl(3, 57%, 80%), transparent 99%), ' +
-                        'radial-gradient(50vw circle at 100vw 0px, hsl(3, 57%, 80%) 20%, transparent 90%),' +
-                        'radial-gradient(80vw circle at 0 10vh, hsl(3, 57%, 80%), transparent 60%),  ' +
-                        'radial-gradient(80vw circle at 40vw 40vh, hsl(251, 80%, 65%), transparent 30%),' +
-                        'radial-gradient(80vw circle at 40vw 90vh, hsl(251, 80%, 65%), transparent 80%),' +
-                        'radial-gradient(50vw circle at 0vw 100vh, hsl(251, 80%, 65%), transparent 90%),' +
-                        'radial-gradient(200vw circle at 70vw 110vh, hsl(251, 80%, 65%), transparent 50%);'
+import BackgroundSpheres from '../../utils/background-sphere.js';
+
+// const backgroundImage = 'radial-gradient(50vw circle at 50vw 0, hsl(3, 57%, 80%), transparent 99%), ' +
+//                         'radial-gradient(50vw circle at 100vw 0px, hsl(3, 57%, 80%) 20%, transparent 90%),' +
+//                         'radial-gradient(80vw circle at 0 10vh, hsl(3, 57%, 80%), transparent 60%),  ' +
+//                         'radial-gradient(80vw circle at 40vw 40vh, hsl(251, 80%, 65%), transparent 30%),' +
+//                         'radial-gradient(80vw circle at 40vw 90vh, hsl(251, 80%, 65%), transparent 80%),' +
+//                         'radial-gradient(50vw circle at 0vw 100vh, hsl(251, 80%, 65%), transparent 90%),' +
+//                         'radial-gradient(200vw circle at 70vw 110vh, hsl(251, 80%, 65%), transparent 50%);'
 
 const StyledContainer = styled.div`
     background-image: ${props => props.backgroundImage};
-    background-color: hsl(3, 57%, 80%);
+    background-color: ${props => props.backgroundColor};
     color: white;
     width: 100vw;
     height: 100vh;
@@ -33,27 +35,31 @@ const StyledContainer = styled.div`
 
 // React components
 class MoodContainer extends Component {
-
-    static PropType = {
-
-    }
-
     constructor(props) {
         // console.log('backgroundImage', backgroundImage);
         super(props);
         this.state = {
-            uiPrompt: 'Type your mood ...'
+            uiPrompt: 'Type your mood ...',
+            backgroundImage: null,
+            backgroundColor: 'hsl(0, 100%, 100%);',
         }
     }
-    // TODO make ui prompts rotating thru mood prompts
+
+    componentWillReceiveProps(nextProps) {
+        console.log('MoodContainter.componentWillReceiveProps nextProps.mood', nextProps.mood);
+        let bs = new BackgroundSpheres(nextProps.mood);
+        this.setState({backgroundColor:bs.backgroundColor, backgroundImage: bs.getBackgroundImage()})
+        // console.log('componentWillReceiveProps background', bs);
+    }
+
     render() {
         return (
-            <StyledContainer backgroundImage={backgroundImage}>
+            <StyledContainer backgroundImage={this.state.backgroundImage} backgroundColor={this.state.backgroundColor}>
                 <FlexItem  basis="50%">
                     <Flex column full alignCenter justifyEnd>
                         <MoodInput
                             currentInput={this.props.currentInput}
-                            onInputChange={this.props.moodChangeHandler}
+                            onInputChange={this.props.handleMoodChange}
                             />
                     </Flex>
                 </FlexItem>
@@ -85,7 +91,7 @@ class MoodContainer extends Component {
 MoodContainer.propTypes = {
   mood: PropTypes.string.isRequired,
   currentInput: PropTypes.string.isRequired,
-  moodChangeHandler: PropTypes.func.isRequired,
+  handleMoodChange: PropTypes.func.isRequired,
   handleInputStateChange: PropTypes.func.isRequired,
 };
 

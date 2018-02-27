@@ -17,8 +17,7 @@ const StyledFlexButton = styled(Flex)`
 `;
 
 const NavButton = (props) => {
-    // console.log('NavButton props', props);
-    let color = props.isActive ? '#fff' : '#dbdbdb';
+    let color = props.isActive ? 'hsl(0,0%,100%)' : 'hsl(0,0%,95%)';
 
     const onClick = () => {
         props.handleInputStateChange(props.inputType);
@@ -32,7 +31,7 @@ const NavButton = (props) => {
 }
 
 NavButton.propTypes = {
-  isActive: PropTypes.bool,
+  isActive: PropTypes.bool.isRequired,
   inputType: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };
@@ -40,7 +39,7 @@ NavButton.propTypes = {
 NavButton.defaultProps = {
   isActive: false,
   onClick: () => {},
-  color: '#dbdbdb',
+  color: 'hsl(0,0%,95%)',
 };
 
 export default NavButton;

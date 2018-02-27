@@ -30,11 +30,12 @@ class App extends Component {
       }
 
       this.fetchMood = this.fetchMood.bind(this);
+      this.handleMoodChange = this.handleMoodChange.bind(this);
       this.handleInputStateChange = this.handleInputStateChange.bind(this);
   }
 
   componentDidMount() {
-      // console.log('App ComponentDidMount');
+      console.log('App ComponentDidMount. current mood', this.state.currentMood);
       this.fetchMood();
   }
 
@@ -49,15 +50,14 @@ class App extends Component {
       });
   }
 
-  // TODO change to verb
-  moodChangeHandler(value) {
+  handleMoodChange(value) {
       this.setState({currentStatus: 'working'});
-      console.log('moodChangeHandler', value);
+      console.log('handleMoodChange', value);
       const reqBody = {mood: value};
       axios.post(controllerUrl, reqBody)
           .then( (res) => {
               console.log('Mood changed. res.data=', res.data);
-              this.setState({currentStatus:'waiting'})
+              this.setState({currentMood: res.data.mood, currentStatus:'waiting'})
           })
           .catch( (err) => {
               console.log('error', err);
@@ -71,7 +71,7 @@ class App extends Component {
 
   render() {
     return <MoodContainer
-                moodChangeHandler={this.moodChangeHandler}
+                handleMoodChange={this.handleMoodChange}
                 handleInputStateChange={this.handleInputStateChange}
                 hand
                 mood={this.state.currentMood}
