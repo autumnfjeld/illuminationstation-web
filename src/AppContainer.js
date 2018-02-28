@@ -35,14 +35,14 @@ class App extends Component {
   }
 
   componentDidMount() {
-      console.log('App ComponentDidMount. current mood', this.state.currentMood);
+      // console.log('App ComponentDidMount. current mood', this.state.currentMood);
       this.fetchMood();
   }
 
   fetchMood() {
       axios.get(controllerUrl + '/getstate')
       .then( (res) => {
-          console.log('Got mood.  res.data', res.data);
+          console.log('Got mood.  res.data.mood=', res.data.mood);
           this.setState({currentMood: res.data.mood, currentStatus: 'waiting'});
       })
       .catch( (err) => {
@@ -52,11 +52,12 @@ class App extends Component {
 
   handleMoodChange(value) {
       this.setState({currentStatus: 'working'});
-      console.log('handleMoodChange', value);
+      console.log('AppContainer.handleMoodChange', value);
       const reqBody = {mood: value};
       axios.post(controllerUrl, reqBody)
           .then( (res) => {
-              console.log('Mood changed. res.data=', res.data);
+              console.log('Mood changed. res.data.mood=', res.data.mood );
+              console.log(' res.data.fulfillmentText=', res.data.fulfillmentText);
               this.setState({currentMood: res.data.mood, currentStatus:'waiting'})
           })
           .catch( (err) => {

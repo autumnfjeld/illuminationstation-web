@@ -3,6 +3,8 @@ import React from "react";
 // import PropTypes from "prop-types";
 import styled from "styled-components";
 
+// constants
+import {moodKeywords} from '../../static/constants.js';
 // Styles
 const StyledInput = styled.input`
   color: white;
@@ -26,20 +28,31 @@ class MoodInput extends React.Component {
           value: '' ,
           inputWidth: '4px'
       };
-      this.inputChangeHandler = this.inputChangeHandler.bind(this);
+      this.handleInputChange = this.handleInputChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.getMoodFromPhrase = this.getMoodFromPhrase.bind(this);
     }
 
     componentDidMount() {
         setTimeout(() => this.setState({inputWidth: '300px'}), 0);
     }
 
-    inputChangeHandler(event) {
+    handleInputChange(event) {
       this.setState({value: event.target.value});
     }
 
+    getMoodFromPhrase(phrase){
+        // if (!phrase) return;
+        const foundKeyword = Object.keys(moodKeywords).find( (keyword) => {
+            return phrase.toLowerCase().indexOf(keyword) !== -1;
+        });
+        console.log('foundKeyword', foundKeyword);
+        return moodKeywords[foundKeyword];
+
+    }
+
     handleSubmit(event) {
-      this.props.onInputChange(this.state.value);
+      this.props.onInputChange(this.getMoodFromPhrase(this.state.value));
       this.setState({value: ''});
       event.preventDefault();
     }
@@ -51,7 +64,7 @@ class MoodInput extends React.Component {
                     width={this.state.inputWidth}
                     go={this.state.go}
                     value={this.state.value}
-                    onChange={this.inputChangeHandler}
+                    onChange={this.handleInputChange}
                     autoFocus
                 />
             </form>

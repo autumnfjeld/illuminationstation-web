@@ -46,7 +46,7 @@ class MoodContainer extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('MoodContainter.componentWillReceiveProps nextProps.mood', nextProps.mood);
+        // console.log('MoodContainter.componentWillReceiveProps nextProps.mood', nextProps.mood);
         let bs = new BackgroundSpheres(nextProps.mood);
         this.setState({backgroundColor:bs.backgroundColor, backgroundImage: bs.getBackgroundImage()})
         // console.log('componentWillReceiveProps background', bs);

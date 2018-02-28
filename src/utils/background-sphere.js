@@ -15,7 +15,7 @@ const moodMap = {
         ]
     },
     neutral: {
-        color1: [216,26, 80],
+        color1: [30,38, 60],
         color2: [171,171, 171],
         backgroundColor: 'hsl(171, 171%, 171%);',
         sphereSet: [
@@ -76,7 +76,7 @@ class BackgroundSpheres {
             mood = 'oops';
             console.log('That is not a valid mood, setting mood to Opps!');
         }
-        // console.log('BackgroundSpheres   mood:', mood);
+        console.log('BackgroundSpheres Activate!  mood:', mood);
         this.initSpheres = moodMap[mood].sphereSet;
         this.backgroundColor = moodMap[mood].backgroundColor;
         this.dynamicSpheres = this.initSpheres;

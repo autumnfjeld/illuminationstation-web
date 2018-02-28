@@ -24,18 +24,18 @@ const StyledText = styled.p`
 // Constants
 const promptTexts = {
     waiting: {
-        text: 'Type your mood',
-        speech: 'Tell me how you are feeling',
-        moodPrompts: moods,
-        // moodPrompts: {
-        //     'party':    'Let\'s party!',
-        //     'soothing': 'I\'ve had a rough day.',
-        //     'artic':    'It\'s sooo hot outside.',
-        //     'neutral': 'I\'m feelin\' fine.'
-        // }
+        text: 'Tell me how you\'re feeling',
+        speech: 'Tell me how you\'re feeling',
+        // moodPrompts: moods,
+        moodPrompts: {
+            'party':    'Let\'s party!',
+            'soothing': 'I\'ve had a rough day.',
+            'artic':    'It\'s sooo hot outside.',
+            'neutral': 'I\'m feelin\' fine.'
+        }
     },
     working: 'Cool. IlluminationStation at your service.',
-    responding: `Found some <insert mood> lights for you.`
+    responding: `Here's something <insert mood> for you.`
 };
 
 class PromptText extends Component {
