@@ -26,12 +26,14 @@ class App extends Component {
           // Given appStates at loadtime
           currentInput: 'text',
           currentStatus: 'working',
-          currentMood: 'neutral'
+          currentMood: 'neutral',
+          responseText: null
       }
 
       this.fetchMood = this.fetchMood.bind(this);
       this.handleMoodChange = this.handleMoodChange.bind(this);
       this.handleInputStateChange = this.handleInputStateChange.bind(this);
+      // this.clearResponse = this.clearResponse.bind(this);
   }
 
   componentDidMount() {
@@ -41,24 +43,28 @@ class App extends Component {
 
   fetchMood() {
       axios.get(controllerUrl + '/getstate')
-      .then( (res) => {
-          console.log('Got mood.  res.data.mood=', res.data.mood);
-          this.setState({currentMood: res.data.mood, currentStatus: 'waiting'});
-      })
-      .catch( (err) => {
-          console.log('error', err);
-      });
+          .then( (res) => {
+              // console.log('Got mood.  res.data.mood=', res.data.mood);
+              this.setState({currentMood: res.data.mood, currentStatus: 'waiting'});
+          })
+          .catch( (err) => {
+              console.log('error', err);
+          });
   }
 
   handleMoodChange(value) {
       this.setState({currentStatus: 'working'});
-      console.log('AppContainer.handleMoodChange', value);
+      // console.log('AppContainer.handleMoodChange', value);
       const reqBody = {mood: value};
       axios.post(controllerUrl, reqBody)
           .then( (res) => {
               console.log('Mood changed. res.data.mood=', res.data.mood );
               console.log(' res.data.fulfillmentText=', res.data.fulfillmentText);
-              this.setState({currentMood: res.data.mood, currentStatus:'waiting'})
+              this.setState({
+                  currentMood: res.data.mood,
+                  responseText: res.data.fulfillmentText,
+                  currentStatus:'waiting'
+              });
           })
           .catch( (err) => {
               console.log('error', err);
@@ -66,7 +72,7 @@ class App extends Component {
   }
 
   handleInputStateChange(value) {
-      // console.log('handleInputStateChange', value);
+      console.log('handleInputStateChange', value);
       this.setState({currentInput: value});
   }
 
@@ -79,6 +85,8 @@ class App extends Component {
                 text={this.state.text}
                 currentInput={this.state.currentInput}
                 currentStatus={this.state.currentStatus}
+                responseText={this.state.responseText}
+                // clearResponse={()=>this.setState({responseText:null})}
             />
   }
 }

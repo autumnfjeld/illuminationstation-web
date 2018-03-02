@@ -2,12 +2,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Flex, { FlexItem } from 'styled-flex-component';
+import ToggleDisplay from 'react-toggle-display';
 
 // Components
-import Flex, { FlexItem } from 'styled-flex-component';
 import MoodInput from '../MoodInput';
 import NavButtons from '../NavButtons';
 import PromptText from '../PromptText';
+import ResponseText from '../ResponseText';
+import StyledText from '../StyledText';
 
 // Styles
 import BackgroundSpheres from '../../utils/background-sphere.js';
@@ -36,20 +39,30 @@ const StyledContainer = styled.div`
 // React components
 class MoodContainer extends Component {
     constructor(props) {
-        // console.log('backgroundImage', backgroundImage);
         super(props);
         this.state = {
             uiPrompt: 'Type your mood ...',
             backgroundImage: null,
             backgroundColor: 'hsl(0, 100%, 100%);',
+            showWelcomeText: true,
+            showPrompt: true
         }
     }
 
+    componentDidMount() {
+        setTimeout( () => this.setState({showWelcomeText: false}), 6000);
+    }
+
     componentWillReceiveProps(nextProps) {
-        // console.log('MoodContainter.componentWillReceiveProps nextProps.mood', nextProps.mood);
+        console.log('MoodContainter.componentWillReceiveProps nextProps.mood', nextProps.mood);
         let bs = new BackgroundSpheres(nextProps.mood);
         this.setState({backgroundColor:bs.backgroundColor, backgroundImage: bs.getBackgroundImage()})
         // console.log('componentWillReceiveProps background', bs);
+        // debugger;
+        if (this.props.responseText !== nextProps.responseText) {
+            // Show responseText instead of prompt
+            this.setState({showPrompt: false});
+        }
     }
 
     render() {
@@ -65,11 +78,27 @@ class MoodContainer extends Component {
                 </FlexItem>
                 <FlexItem grow="1">
                     <Flex column full alignCenter justifyStart>
-                        <PromptText
-                            // mood={this.props.mood}
-                            currentInput={this.props.currentInput}
-                            appStatus={this.props.currentStatus}
-                        />
+                        <ToggleDisplay show={this.state.showWelcomeText}>
+                            <FlexItem basis="300px">
+                                <StyledText opacity="1">
+                                    Welcome to Lumi.
+                                </StyledText>
+                                <StyledText opacity="1">
+                                    Tell us how you're feeling and we'll provide a mood to match.
+                                </StyledText>
+                            </FlexItem>
+                        </ToggleDisplay>
+                        <ToggleDisplay show={!this.state.showWelcomeText}>
+                            {
+                                this.state.showPrompt ?
+                                <PromptText
+                                    currentInput={this.props.currentInput}
+                                    appStatus={this.props.currentStatus}
+                                /> :
+                                <ResponseText responseText={this.props.responseText} reset={()=>this.setState({showPrompt:true})} />
+                            }
+
+                        </ToggleDisplay>
                     </Flex>
                 </FlexItem>
                 <FlexItem basis="30%">
@@ -95,4 +124,4 @@ MoodContainer.propTypes = {
   handleInputStateChange: PropTypes.func.isRequired,
 };
 
-export default MoodContainer
+export default MoodContainer;

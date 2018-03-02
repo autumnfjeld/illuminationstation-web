@@ -4,8 +4,11 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import ReactInterval from 'react-interval';
 
+// Components
+import Flex from 'styled-flex-component';
+
 // App constants
-import {moods} from '../../static/constants.js';
+import {moodPrompts, moods} from '../../static/constants.js';
 
 // Styled Component
 const StyledText = styled.p`
@@ -14,96 +17,75 @@ const StyledText = styled.p`
   background: transparent;
   border: none;
   line-height: 1.2;
-  margin-top: 50px;
+  margin: .5em;
   outline:none;
-  padding: 0.1em;
   transition: width 2s ease-in-out;
   width: ${props =>  props.width};
   will-change: width;
 `;
 // Constants
 const promptTexts = {
-    waiting: {
-        text: 'Tell me how you\'re feeling',
-        speech: 'Tell me how you\'re feeling',
-        // moodPrompts: moods,
-        moodPrompts: {
-            'party':    'Let\'s party!',
-            'soothing': 'I\'ve had a rough day.',
-            'artic':    'It\'s sooo hot outside.',
-            'neutral': 'I\'m feelin\' fine.'
-        }
-    },
-    working: 'Cool. IlluminationStation at your service.',
+    waiting: 'Tell me how you\'re feeling.',
+    working: 'IlluminationStation at your service.',
     responding: `Here's something <insert mood> for you.`
 };
 
 class PromptText extends Component {
     constructor(props) {
-        console.log('PropmtTextComponent   props.appStatus', props.appStatus);
+        console.log('props.appStatus', props.appStatus);
+        console.log('PropmtTextComponent   moodPrompts[0]', moodPrompts[0]);
         super(props);
         this.state = {
             enabled: true,
             timeout: 4000,
-            count: 0,
+            count: 1,
             promptLead: 'Try typing:  ',
-            text: promptTexts[props.appStatus],
+            statusText: promptTexts[props.appStatus],
+            textMoodPrompt: moodPrompts[0]
         }
-        if (props.appStatus === 'waiting') {
-            this.state.text = promptTexts[props.appStatus][props.currentInput];
-        }
-        if (props.currentInput === 'voice') this.setState({promptLead: 'Try saying: '});
         this.intervalCallback = this.intervalCallback.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log('fuck', this.state.textMoodPrompt)
+        console.log('PromptText.componentWillReceiveProps nextProps', nextProps);
         if (this.props.appStatus !== nextProps.appStatus){
-            // console.log('props.appStatus', this.props.appStatus, 'nextProps', nextProps.appStatus);
-            if (nextProps.appStatus === 'waiting') {
-                this.setState({text: promptTexts[nextProps.appStatus][nextProps.currentInput]});
-            } else {
-                this.setState({text: promptTexts[nextProps.appStatus]});
-            }
+            console.log('*****', promptTexts[nextProps.appStatus]);
+            this.setState({statusText: promptTexts[nextProps.appStatus]});
         }
     }
 
     intervalCallback() {
-        // console.log('intervalCallback', this.state.count, Object.keys(moods).length, this.state.text);
+        console.log('******intervalCallback', this.state.count, Object.keys(moods).length, this.state.textMoodPrompt);
         // console.log('Object.values(promptTexts.waiting.moodPrompts) ', Object.values(promptTexts.waiting.moodPrompts))
-        let promptText = this.state.promptLead + Object.values(promptTexts.waiting.moodPrompts)[this.state.count];
-        this.setState({text: promptText});
-        // console.log('text',moods[this.state.count], promptTexts.waiting.moodPrompts[moods[this.state.count]]);
-        this.setState({count: (this.state.count === Object.keys(moods).length - 1 ? 0 : this.state.count + 1)});
+        let promptText = this.state.promptLead + moodPrompts[this.state.count];
+        this.setState({textMoodPrompt: promptText});
+        // // console.log('text',moods[this.state.count], promptTexts.waiting.moodPrompts[moods[this.state.count]]);
+        this.setState({count: (this.state.count === Object.keys(moodPrompts).length - 1 ? 0 : this.state.count + 1)});
     }
 
-    // switch(props.appStatus) {
-    //     case 'waiting':
-    //         prompt = promptTexts[props.appStatus][props.inputState];
-    //         break;
-    //     case 'working':
-    //         prompt = promptTexts[props.appStatus];
-    //         break;
-    //     case 'responding':
-    //         break;
-    //     default
-    //         prompt = null;
-    // }
     render() {
         const {timeout, enabled} = this.state;
         return (
-            <div>
+            <Flex column alignCenter>
                 <ReactInterval {...{timeout, enabled}}
                     callback={this.intervalCallback}
                 />
-                <StyledText> {this.state.text} </StyledText>
-            </div>
+                {/* <StyledText> {this.state.statusText} </StyledText> */}
+                <StyledText> {this.state.textMoodPrompt} </StyledText>
+            </Flex>
         )
     }
 };
 
 PromptText.propTypes = {
     currentInput: PropTypes.string.isRequired,
-    appStatus: PropTypes.string.isRequired
+    appStatus: PropTypes.string.isRequired,
+    responseText: PropTypes.string.isRequired
 };
+
+PromptText.defaultProps = {
+    responseText: ''
+}
 
 export default PromptText;

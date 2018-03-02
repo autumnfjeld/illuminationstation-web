@@ -13,7 +13,7 @@ const StyledInput = styled.input`
   border-bottom: 3px solid white;
   font-size: 2rem;
   line-height: 1.2;
-  margin: 0.5em;
+  margin: 1.2em;
   outline:none;
   padding: 0.2em;
   transition: width 2s ease-in-out;
@@ -46,7 +46,7 @@ class MoodInput extends React.Component {
         const foundKeyword = Object.keys(moodKeywords).find( (keyword) => {
             return phrase.toLowerCase().indexOf(keyword) !== -1;
         });
-        console.log('foundKeyword', foundKeyword);
+        // console.log('foundKeyword', foundKeyword);
         return moodKeywords[foundKeyword];
 
     }
