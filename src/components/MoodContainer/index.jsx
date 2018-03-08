@@ -15,14 +15,6 @@ import StyledText from '../StyledText';
 // Styles
 import BackgroundSpheres from '../../utils/background-sphere.js';
 
-// const backgroundImage = 'radial-gradient(50vw circle at 50vw 0, hsl(3, 57%, 80%), transparent 99%), ' +
-//                         'radial-gradient(50vw circle at 100vw 0px, hsl(3, 57%, 80%) 20%, transparent 90%),' +
-//                         'radial-gradient(80vw circle at 0 10vh, hsl(3, 57%, 80%), transparent 60%),  ' +
-//                         'radial-gradient(80vw circle at 40vw 40vh, hsl(251, 80%, 65%), transparent 30%),' +
-//                         'radial-gradient(80vw circle at 40vw 90vh, hsl(251, 80%, 65%), transparent 80%),' +
-//                         'radial-gradient(50vw circle at 0vw 100vh, hsl(251, 80%, 65%), transparent 90%),' +
-//                         'radial-gradient(200vw circle at 70vw 110vh, hsl(251, 80%, 65%), transparent 50%);'
-
 const StyledContainer = styled.div`
     background-image: ${props => props.backgroundImage};
     background-color: ${props => props.backgroundColor};
@@ -50,17 +42,15 @@ class MoodContainer extends Component {
     }
 
     componentDidMount() {
-        setTimeout( () => this.setState({showWelcomeText: false}), 6000);
+        setTimeout( () => this.setState({showWelcomeText: false}), 8000);
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('MoodContainter.componentWillReceiveProps nextProps.mood', nextProps.mood);
+        // console.log('MoodContainter.componentWillReceiveProps nextProps.mood', nextProps.mood);
         let bs = new BackgroundSpheres(nextProps.mood);
         this.setState({backgroundColor:bs.backgroundColor, backgroundImage: bs.getBackgroundImage()})
-        // console.log('componentWillReceiveProps background', bs);
-        // debugger;
         if (this.props.responseText !== nextProps.responseText) {
-            // Show responseText instead of prompt
+            // Change to responseText instead of prompt
             this.setState({showPrompt: false});
         }
     }
@@ -82,8 +72,7 @@ class MoodContainer extends Component {
                             <FlexItem basis="300px">
                                 <StyledText opacity="1">
                                     Welcome to Lumi.
-                                </StyledText>
-                                <StyledText opacity="1">
+                                    <br />
                                     Tell us how you're feeling and we'll provide a mood to match.
                                 </StyledText>
                             </FlexItem>
@@ -109,9 +98,9 @@ class MoodContainer extends Component {
                          />
                     </Flex>
                 </FlexItem>
-                <small>Mood: {this.props.mood} </small>
+                {/* <small>Mood: {this.props.mood} </small>
                 <small>Input State: {this.props.currentInput} </small>
-                <small>appStatus: {this.props.currentStatus} </small>
+                <small>appStatus: {this.props.currentStatus} </small> */}
             </StyledContainer>
         )
     }

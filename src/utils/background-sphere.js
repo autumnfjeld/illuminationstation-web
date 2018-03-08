@@ -6,21 +6,23 @@ const moodMap = {
     oops: {
         color1: [216,26, 80],
         color2: [171,171, 171],
-        backgroundColor: 'hsl(0, 33%, 35%);',
+        backgroundColor: 'hsl(25, 58%, 20%);',
         sphereSet: [
-            { radius: 50,    pos: [33, 33],      color1:[0,28, 30],       color2: [3,57, 80],     trans: 99 },
-            { radius: 60,    pos: [66, 33],     color1:[0,14, 40],       color2: [3,57, 80],     trans: 96 },
-            { radius: 50,    pos: [33, 66],      color1:[0,26, 80],       color2: [3,57, 80],     trans: 99 },
+            { radius: 50,    pos: [33, 33],      color1:[25,58, 10],       color2: [3,57, 80],     trans: 99 },
+            { radius: 60,    pos: [66, 33],     color1:[117, 52, 10],       color2: [3,57, 80],     trans: 96 },
+            { radius: 50,    pos: [33, 66],      color1:[117, 52, 10],       color2: [3,57, 80],     trans: 90 },
             { radius: 60,    pos: [66, 66],     color1:[3,48, 27],       color2: [3,57, 80],     trans: 96 }
         ]
     },
+    // Use this as start background
     neutral: {
         color1: [30,38, 60],
-        color2: [171,171, 171],
+        // color2: [171,171, 171],
+        color2: [322,100, 50],
         backgroundColor: 'hsl(171, 171%, 171%);',
         sphereSet: [
-            { radius: 50,    pos: [33, 50],      color1:[216,26, 80],       color2: [3,57, 80],     trans: 99 },
-            { radius: 60,    pos: [66, 50],     color1:[3,57, 80],       color2: [3,57, 80],     trans: 96 }
+            { radius: 50,    pos: [33, 50],      color1:[216,80, 71],       color2: [3,57, 80],     trans: 99 },
+            { radius: 60,    pos: [66, 50],     color1:[301,57, 80],       color2: [3,57, 80],     trans: 96 }
         ]
     },
     soothing: {
@@ -76,7 +78,7 @@ class BackgroundSpheres {
             mood = 'oops';
             console.log('That is not a valid mood, setting mood to Opps!');
         }
-        console.log('BackgroundSpheres Activate!  mood:', mood);
+        // console.log('BackgroundSpheres Activate!  mood:', mood);
         this.initSpheres = moodMap[mood].sphereSet;
         this.backgroundColor = moodMap[mood].backgroundColor;
         this.dynamicSpheres = this.initSpheres;

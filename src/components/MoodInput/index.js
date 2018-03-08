@@ -16,6 +16,7 @@ const StyledInput = styled.input`
   margin: 1.2em;
   outline:none;
   padding: 0.2em;
+  text-align: center;
   transition: width 2s ease-in-out;
   width: ${props =>  props.width};
   will-change: width;
@@ -31,7 +32,7 @@ class MoodInput extends React.Component {
       this.handleInputChange = this.handleInputChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.getMoodFromPhrase = this.getMoodFromPhrase.bind(this);
-    }
+  }
 
     componentDidMount() {
         setTimeout(() => this.setState({inputWidth: '300px'}), 0);
@@ -41,12 +42,12 @@ class MoodInput extends React.Component {
       this.setState({value: event.target.value});
     }
 
+    // TODO make filter more sophisticated, for instance differentiate between ok and stoked
     getMoodFromPhrase(phrase){
-        // if (!phrase) return;
         const foundKeyword = Object.keys(moodKeywords).find( (keyword) => {
             return phrase.toLowerCase().indexOf(keyword) !== -1;
         });
-        // console.log('foundKeyword', foundKeyword);
+        // console.log('MoodInput foundKeyword', foundKeyword);
         return moodKeywords[foundKeyword];
 
     }
