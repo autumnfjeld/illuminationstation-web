@@ -32,6 +32,7 @@ class MoodInput extends React.Component {
       this.handleInputChange = this.handleInputChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.getMoodFromPhrase = this.getMoodFromPhrase.bind(this);
+      this.resetStuff = this.resetStuff.bind(this);
     }
 
     componentDidMount() {
@@ -39,9 +40,14 @@ class MoodInput extends React.Component {
     }
 
     // onFocus() {
-    //     console.log('MoodInput.onFocus');
-    //     // this.props.toggleOops(false);
-    // }
+    resetStuff () {
+        console.log('MoodInput.resetStuff');
+        if (this.props.showOops) {
+            this.setState({value: ''});
+            this.props.toggleOops(false);
+        }
+        // this.props.toggleOops(false);
+    }
 
     handleInputChange(event) {
         // Make sure showOops is set to false
@@ -54,7 +60,6 @@ class MoodInput extends React.Component {
         const foundKeyword = Object.keys(moodKeywords).find( (keyword) => {
             return phrase.toLowerCase().indexOf(keyword) !== -1;
         });
-        // this.setState({value: foundKeyword});
         // console.log('MoodInput foundKeyword', foundKeyword);
         return moodKeywords[foundKeyword];
     }
@@ -67,7 +72,8 @@ class MoodInput extends React.Component {
           this.props.onInputChange(moodFromPhrase);
           this.setState({value: ''});
       } else {
-          // console.log('showOops!!!  current ', this.props);
+          this.props.onInputChange('oops');
+          console.log('MoodInput.handleSubmit() showOops!!!   ', this.props);
           this.props.toggleOops(true);
       }
       event.preventDefault();
@@ -81,7 +87,7 @@ class MoodInput extends React.Component {
                     go={this.state.go}
                     value={this.state.value}
                     onChange={this.handleInputChange}
-                    // onFocus={this.onFocus}
+                    onClick={this.resetStuff}
                     autoFocus
                 />
             </form>

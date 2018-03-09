@@ -6,9 +6,9 @@ const moodMap = {
     oops: {
         color1: [216,26, 80],
         color2: [171,171, 171],
-        backgroundColor: 'hsl(25, 58%, 20%);',
+        backgroundColor: 'hsl(25, 58%, 63%);',
         sphereSet: [
-            { radius: 50,    pos: [33, 33],      color1:[25,58, 10],       color2: [3,57, 80],     trans: 99 },
+            { radius: 50,    pos: [33, 33],      color1:[34,51, 42],       color2: [3,57, 80],     trans: 99 },
             { radius: 60,    pos: [66, 33],     color1:[117, 52, 10],       color2: [3,57, 80],     trans: 96 },
             { radius: 50,    pos: [33, 66],      color1:[117, 52, 10],       color2: [3,57, 80],     trans: 90 },
             { radius: 60,    pos: [66, 66],     color1:[3,48, 27],       color2: [3,57, 80],     trans: 96 }
@@ -23,6 +23,14 @@ const moodMap = {
         sphereSet: [
             { radius: 50,    pos: [33, 50],      color1:[216,80, 71],       color2: [3,57, 80],     trans: 99 },
             { radius: 60,    pos: [66, 50],     color1:[301,57, 80],       color2: [3,57, 80],     trans: 96 }
+        ]
+    },
+    purple: {
+        backgroundColor: 'hsl(276, 100%, 32%);',
+        sphereSet: [
+            { radius: 50,    pos: [33, 50],      color1:[270,80, 71],       color2: [3,57, 80],     trans: 90 },
+            { radius: 60,    pos: [66, 50],     color1:[265,57, 40],       color2: [3,57, 32],     trans: 96 },
+            { radius: 60,    pos: [66, 50],     color1:[265,57, 50],       color2: [3,57, 80],     trans: 96 }
         ]
     },
     soothing: {

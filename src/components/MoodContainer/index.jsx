@@ -45,7 +45,7 @@ class MoodContainer extends Component {
     }
 
     componentDidMount() {
-        console.log('this.state.showWelcomeText', this.state.showWelcomeText);
+        // console.log('this.state.showWelcomeText', this.state.showWelcomeText);
         setTimeout( () => this.setState({showWelcomeText: false}), 8000);
     }
 
@@ -55,13 +55,20 @@ class MoodContainer extends Component {
         this.setState({backgroundColor:bs.backgroundColor, backgroundImage: bs.getBackgroundImage()})
         if (this.props.responseText !== nextProps.responseText) {
             // Change to responseText instead of prompt
-            this.setState({showPrompt: false});
+            this.setState({showPrompt: false, showWelcomeText: false});
         }
     }
 
     toggleOops(bool) {
-        console.log('toggleOops', this.state.showOops);
+        console.log('MoodContainer.toggleOops()  current showOoops:', this.state.showOops);
         this.setState({showOops: bool});
+        // if (this.state.showOops) {
+        //     const id = setTimeout(()=> {
+        //         console.log('setting oops timeout');
+        //         this.setState({showOops: false});
+        //         clearTimeout(id);
+        //     }, 4000);
+        // }
     }
 
     render() {
