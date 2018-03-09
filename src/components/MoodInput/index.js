@@ -1,6 +1,6 @@
 // Externals
 import React from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 // constants
@@ -27,19 +27,26 @@ class MoodInput extends React.Component {
       super(props);
       this.state = {
           value: '' ,
-          inputWidth: '4px'
+          inputWidth: '4px',
       };
       this.handleInputChange = this.handleInputChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.getMoodFromPhrase = this.getMoodFromPhrase.bind(this);
-  }
+    }
 
     componentDidMount() {
         setTimeout(() => this.setState({inputWidth: '300px'}), 0);
     }
 
+    // onFocus() {
+    //     console.log('MoodInput.onFocus');
+    //     // this.props.toggleOops(false);
+    // }
+
     handleInputChange(event) {
-      this.setState({value: event.target.value});
+        // Make sure showOops is set to false
+        if (this.props.showOops) this.props.toggleOops(false);
+        this.setState({value: event.target.value});
     }
 
     // TODO make filter more sophisticated, for instance differentiate between ok and stoked
@@ -47,14 +54,22 @@ class MoodInput extends React.Component {
         const foundKeyword = Object.keys(moodKeywords).find( (keyword) => {
             return phrase.toLowerCase().indexOf(keyword) !== -1;
         });
+        // this.setState({value: foundKeyword});
         // console.log('MoodInput foundKeyword', foundKeyword);
         return moodKeywords[foundKeyword];
-
     }
 
     handleSubmit(event) {
-      this.props.onInputChange(this.getMoodFromPhrase(this.state.value));
-      this.setState({value: ''});
+      // console.log('MoodInput value', this.state.value);
+      const moodFromPhrase = this.getMoodFromPhrase(this.state.value);
+      // console.log('MoodInput moodFromPhrase', moodFromPhrase);
+      if (moodFromPhrase) {
+          this.props.onInputChange(moodFromPhrase);
+          this.setState({value: ''});
+      } else {
+          // console.log('showOops!!!  current ', this.props);
+          this.props.toggleOops(true);
+      }
       event.preventDefault();
     }
 
@@ -66,11 +81,17 @@ class MoodInput extends React.Component {
                     go={this.state.go}
                     value={this.state.value}
                     onChange={this.handleInputChange}
+                    // onFocus={this.onFocus}
                     autoFocus
                 />
             </form>
         )
     }
 }
+
+MoodInput.propTypes = {
+    onInputChange: PropTypes.func.isRequired,
+    // showOops: PropTypes.bool.isRequired
+};
 
 export default MoodInput

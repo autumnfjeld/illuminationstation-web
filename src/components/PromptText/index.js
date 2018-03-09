@@ -6,22 +6,25 @@ import ReactInterval from 'react-interval';
 
 // Components
 import Flex from 'styled-flex-component';
+import ToggleDisplay from 'react-toggle-display';
 
 // App constants
 import {moodPrompts} from '../../static/constants.js';
 
 // Styled Component
-const StyledText = styled.p`
+const StyledPromptText = styled.p`
   color: white;
   font-size: 1.6rem;
   background: transparent;
   border: none;
-  line-height: 1.2;
+  line-height: 1.8;
   margin: .5em;
   outline:none;
   transition: width 2s ease-in-out;
+  text-align: center;
   width: ${props =>  props.width};
   will-change: width;
+  ${'' /* visibility: ${props => props.visibile ? 'visibile' : 'hidden'}; */}
 `;
 
 // Constants
@@ -39,9 +42,10 @@ class PromptText extends Component {
             timeout: 4000,
             count: 1,
             statusText: promptTexts[props.appStatus],
-            textMoodPrompt: 'Try typing: ' + moodPrompts[0]
+            textMoodPrompt: 'Try typing: ' + moodPrompts[0],
         }
         this.intervalCallback = this.intervalCallback.bind(this);
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -66,7 +70,13 @@ class PromptText extends Component {
                 <ReactInterval {...{timeout, enabled}}
                     callback={this.intervalCallback}
                 />
-                <StyledText> {this.state.textMoodPrompt} </StyledText>
+                {this.props.showOops}
+                <ToggleDisplay show={!this.props.showOops}>
+                    <StyledPromptText> {this.state.textMoodPrompt} </StyledPromptText>
+                </ToggleDisplay>
+                <ToggleDisplay show={this.props.showOops}>
+                    <StyledPromptText> Oops. I did't understand.  <br /> Can you try another phrase? </StyledPromptText>
+                </ToggleDisplay>
             </Flex>
         )
     }
@@ -75,11 +85,13 @@ class PromptText extends Component {
 PromptText.propTypes = {
     currentInput: PropTypes.string.isRequired,
     appStatus: PropTypes.string.isRequired,
-    responseText: PropTypes.string.isRequired
+    responseText: PropTypes.string.isRequired,
+    showOops: PropTypes.bool.isRequired
 };
 
 PromptText.defaultProps = {
-    responseText: ''
-}
+    responseText: '',
+    showOops: false
+};
 
 export default PromptText;

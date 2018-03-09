@@ -7,7 +7,7 @@ import ToggleDisplay from 'react-toggle-display';
 
 // Components
 import MoodInput from '../MoodInput';
-import NavButtons from '../NavButtons';
+// import NavButtons from '../NavButtons';
 import PromptText from '../PromptText';
 import ResponseText from '../ResponseText';
 import StyledText from '../StyledText';
@@ -37,11 +37,15 @@ class MoodContainer extends Component {
             backgroundImage: null,
             backgroundColor: 'hsl(0, 100%, 100%);',
             showWelcomeText: true,
-            showPrompt: true
+            showPrompt: true,
+            // Show oops message on mood-not-found
+            showOops: false
         }
+        this.toggleOops = this.toggleOops.bind(this);
     }
 
     componentDidMount() {
+        console.log('this.state.showWelcomeText', this.state.showWelcomeText);
         setTimeout( () => this.setState({showWelcomeText: false}), 8000);
     }
 
@@ -55,6 +59,11 @@ class MoodContainer extends Component {
         }
     }
 
+    toggleOops(bool) {
+        console.log('toggleOops', this.state.showOops);
+        this.setState({showOops: bool});
+    }
+
     render() {
         return (
             <StyledContainer backgroundImage={this.state.backgroundImage} backgroundColor={this.state.backgroundColor}>
@@ -63,6 +72,9 @@ class MoodContainer extends Component {
                         <MoodInput
                             currentInput={this.props.currentInput}
                             onInputChange={this.props.handleMoodChange}
+                            // toggleOops={()=>this.setState({showOops: !this.state.showOops})}
+                            toggleOops={this.toggleOops}
+                            showOops={this.state.showOops}
                             />
                     </Flex>
                 </FlexItem>
@@ -81,6 +93,7 @@ class MoodContainer extends Component {
                             {
                                 this.state.showPrompt ?
                                 <PromptText
+                                    showOops={this.state.showOops}
                                     currentInput={this.props.currentInput}
                                     appStatus={this.props.currentStatus}
                                 /> :
@@ -92,10 +105,10 @@ class MoodContainer extends Component {
                 </FlexItem>
                 <FlexItem basis="30%">
                     <Flex column full alignCenter justifyCenter>
-                        <NavButtons
+                        {/* <NavButtons
                             handleInputStateChange={this.props.handleInputStateChange}
                             currentInput={this.props.currentInput}
-                         />
+                         /> */}
                     </Flex>
                 </FlexItem>
                 {/* <small>Mood: {this.props.mood} </small>
